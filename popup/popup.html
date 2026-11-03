@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SplitSmart AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="../icons/icon32.png" alt="SplitSmart AI" class="app-logo">
+        </div>
+        <div class="title-meta">
+          <h1 class="app-title">SplitSmart <span class="gradient-text">AI</span></h1>
+          <span class="badge model-badge">Muse Spark 1.3</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="modeBadge" class="mode-pill demo">Demo Mode</span>
+        <button id="settingsBtn" class="icon-button" title="Settings" aria-label="Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-body">
+      
+      <!-- VIEW 1: CAPTURE & DICTATE SCREEN -->
+      <section id="captureView" class="view active">
+        
+        <!-- Step 1: Receipt Image -->
+        <div class="card step-card">
+          <div class="card-header-row">
+            <span class="step-num">1</span>
+            <div class="step-title-group">
+              <h2 class="step-title">Receipt Source</h2>
+              <span class="step-desc">Capture active web receipt or upload photo</span>
+            </div>
+            <button id="loadSampleBtn" class="pill-btn secondary" title="Load sample ramen receipt">
+              ✨ Sample Receipt
+            </button>
+          </div>
+
+          <div class="capture-actions">
+            <button id="captureTabBtn" class="btn btn-action" title="Capture current browser tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+              <span>Capture Active Tab</span>
+            </button>
+
+            <label for="fileUploadInput" class="btn btn-secondary upload-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>Upload Image</span>
+              <input type="file" id="fileUploadInput" accept="image/*" class="visually-hidden">
+            </label>
+          </div>
+
+          <!-- Receipt Thumbnail Preview -->
+          <div id="receiptPreviewContainer" class="receipt-preview-container hidden">
+            <div class="preview-card">
+              <img id="receiptImagePreview" alt="Receipt preview" class="preview-img">
+              <div class="preview-overlay">
+                <span id="previewTag" class="tag">Receipt Ready</span>
+                <button id="removeImageBtn" class="remove-btn" title="Remove image">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Voice Dictation -->
+        <div class="card step-card">
+          <div class="card-header-row">
+            <span class="step-num">2</span>
+            <div class="step-title-group">
+              <h2 class="step-title">Voice Dictation Instructions</h2>
+              <span class="step-desc">Speak who had what or paste instructions</span>
+            </div>
+          </div>
+
+          <!-- Voice Mic Bar -->
+          <div class="voice-bar">
+            <button id="micBtn" class="mic-button" title="Start voice recording">
+              <div class="mic-wave"></div>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
+            <div class="mic-status-container">
+              <span id="micStatusText" class="mic-status-label">Tap mic to speak your split instructions</span>
+              <span class="mic-hint">e.g. "Alex had ramen, Sarah and I shared gyoza..."</span>
+            </div>
+          </div>
+
+          <!-- Dictation Textarea -->
+          <div class="textarea-wrapper">
+            <textarea id="dictationInput" rows="3" placeholder="Speak or type split rules (e.g. 'Alex had ramen, Sarah and I shared gyoza, split tip and tax proportionally')"></textarea>
+          </div>
+
+          <!-- Preset Prompts -->
+          <div class="preset-chips">
+            <span class="chips-label">Quick Prompts:</span>
+            <button class="chip" data-prompt="Alex had ramen, Sarah and I shared gyoza, split tip and tax proportionally">
+              🍜 Alex ramen + shared gyoza
+            </button>
+            <button class="chip" data-prompt="Even 3-way split across all diners, split tax and tip proportionally">
+              ⚖️ Even 3-way split
+            </button>
+            <button class="chip" data-prompt="Sarah and I shared everything except drinks. Alex had tea.">
+              🍵 Alex had tea only
+            </button>
+          </div>
+        </div>
+
+        <!-- Primary Action Button -->
+        <div class="submit-section">
+          <button id="analyzeBtn" class="btn btn-primary btn-glow">
+            <span class="btn-spinner hidden" id="analyzeSpinner"></span>
+            <span class="btn-text" id="analyzeBtnText">✨ Analyze with Muse Spark 1.3</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- VIEW 2: BREAKDOWN & RECONCILIATION SCREEN -->
+      <section id="breakdownView" class="view hidden">
+        
+        <!-- Navigation bar -->
+        <div class="view-header">
+          <button id="backToCaptureBtn" class="text-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Scan Another</span>
+          </button>
+          <span class="restaurant-name" id="viewRestaurantName">Ramen Ichiran & Grill</span>
+        </div>
+
+        <!-- Receipt Summary Card -->
+        <div class="card summary-card">
+          <div class="summary-top">
+            <span class="summary-label">Receipt Total</span>
+            <span class="summary-total-amount" id="receiptTotalDisplay">$75.95</span>
+          </div>
+
+          <div class="summary-grid">
+            <div class="grid-item">
+              <span class="gi-label">Subtotal</span>
+              <span class="gi-val" id="receiptSubtotalDisplay">$58.00</span>
+            </div>
+            <div class="grid-item">
+              <span class="gi-label">Tax</span>
+              <span class="gi-val" id="receiptTaxDisplay">$5.51</span>
+            </div>
+            <div class="grid-item">
+              <span class="gi-label">Tip</span>
+              <span class="gi-val" id="receiptTipDisplay">$10.44</span>
+            </div>
+            <div class="grid-item">
+              <span class="gi-label">Fees</span>
+              <span class="gi-val" id="receiptFeesDisplay">$2.00</span>
+            </div>
+          </div>
+
+          <!-- Penny-Perfect Cent Reconciled Invariant Banner -->
+          <div id="reconciliationBanner" class="reconciliation-pill success">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span id="reconciliationText">✓ Reconciled: Sum of shares strictly equals $75.95 down to the cent</span>
+          </div>
+        </div>
+
+        <!-- Itemized Participant Shares List -->
+        <div class="section-title-row">
+          <h3 class="section-title">Itemized Participant Shares</h3>
+          <span class="section-badge" id="participantCountBadge">3 Diners</span>
+        </div>
+
+        <div id="participantsList" class="participants-container">
+          <!-- Populated dynamically via popup.js -->
+        </div>
+
+        <!-- Splitwise Integration Box -->
+        <div class="card splitwise-card">
+          <div class="splitwise-header">
+            <div class="sw-brand">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect width="24" height="24" rx="5" fill="#5BC5A7"/>
+                <path d="M7 12l3.5 3.5L17 8.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="sw-title">Splitwise v3.0 Sync</span>
+            </div>
+            <span class="sw-status" id="swStatusText">Ready to sync</span>
+          </div>
+
+          <div class="sw-form-grid">
+            <div class="form-group">
+              <label for="splitwiseGroupSelect" class="form-label">Splitwise Group</label>
+              <select id="splitwiseGroupSelect" class="form-select">
+                <option value="loading">Loading groups...</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="splitwisePayerSelect" class="form-label">Who Paid The Bill?</label>
+              <select id="splitwisePayerSelect" class="form-select">
+                <option value="me">You (Default Payer)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Friend resolution preview tags -->
+          <div id="friendsResolutionContainer" class="friend-resolution-list">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <button id="syncSplitwiseBtn" class="btn btn-splitwise">
+            <span class="btn-spinner hidden" id="syncSpinner"></span>
+            <span id="syncBtnText">⚡ Sync Expense to Splitwise</span>
+          </button>
+
+          <!-- Splitwise sync result banner -->
+          <div id="splitwiseResultBox" class="sync-result-box hidden"></div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settingsModal" class="modal-backdrop hidden">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 class="modal-title">SplitSmart AI Settings</h3>
+          <button id="closeSettingsBtn" class="close-btn" aria-label="Close settings">✕</button>
+        </div>
+
+        <div class="modal-body">
+          
+          <!-- Offline Demo Mode Toggle -->
+          <div class="setting-toggle-row">
+            <div class="toggle-text">
+              <span class="setting-label">Offline Demo Mode</span>
+              <span class="setting-subtext">Use realistic simulated inference & Splitwise sandbox for instant judging and offline tests</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="offlineModeToggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <hr class="modal-divider">
+
+          <!-- Meta Model API Settings -->
+          <div class="setting-group">
+            <div class="label-with-hint">
+              <label for="metaApiKeyInput" class="setting-label">Meta Model API Key</label>
+              <span class="badge tiny">Muse Spark 1.3</span>
+            </div>
+            <input type="password" id="metaApiKeyInput" class="form-input" placeholder="Enter Meta Model API Key">
+            <span class="input-hint">Used for structured multi-modal receipt parsing directly from browser</span>
+          </div>
+
+          <div class="setting-group">
+            <label for="metaEndpointInput" class="setting-label">Meta Model Endpoint</label>
+            <input type="text" id="metaEndpointInput" class="form-input" value="https://api.meta.ai/v1">
+          </div>
+
+          <hr class="modal-divider">
+
+          <!-- Splitwise API Settings -->
+          <div class="setting-group">
+            <label for="splitwiseApiKeyInput" class="setting-label">Splitwise API Key / Personal Token</label>
+            <input type="password" id="splitwiseApiKeyInput" class="form-input" placeholder="Splitwise API Key or OAuth Token">
+            <span class="input-hint">From Splitwise Developer Portal (Splitwise REST API v3.0)</span>
+          </div>
+
+          <div class="setting-group">
+            <label for="splitwiseBaseUrlInput" class="setting-label">Splitwise Base URL</label>
+            <input type="text" id="splitwiseBaseUrlInput" class="form-input" value="https://secure.splitwise.com/api/v3.0">
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button id="resetDefaultsBtn" class="btn btn-secondary">Reset Defaults</button>
+          <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
+

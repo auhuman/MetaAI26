@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 560" width="400" height="560">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="#F1F5F9"/>
+  <!-- Paper receipt -->
+  <g filter="url(#shadow)">
+    <path d="M 40 20 
+             L 360 20 
+             L 360 520 
+             L 345 510 L 330 520 L 315 510 L 300 520 L 285 510 L 270 520 L 255 510 L 240 520 L 225 510 L 210 520 L 195 510 L 180 520 L 165 510 L 150 520 L 135 510 L 120 520 L 105 510 L 90 520 L 75 510 L 60 520 L 40 510 Z" 
+          fill="#FFFFFF" />
+  </g>
+  
+  <style>
+    .title { font-family: 'Courier New', monospace; font-size: 20px; font-weight: bold; fill: #0f172a; text-anchor: middle; }
+    .sub { font-family: 'Courier New', monospace; font-size: 11px; fill: #64748b; text-anchor: middle; }
+    .divider { stroke: #cbd5e1; stroke-dasharray: 4,4; stroke-width: 1.5; }
+    .item-name { font-family: 'Courier New', monospace; font-size: 13px; fill: #1e293b; font-weight: 600; }
+    .item-price { font-family: 'Courier New', monospace; font-size: 13px; fill: #1e293b; text-anchor: end; font-weight: bold; }
+    .meta-tag { font-family: sans-serif; font-size: 9px; fill: #0284c7; }
+    .total-label { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #0f172a; }
+    .total-val { font-family: 'Courier New', monospace; font-size: 17px; font-weight: 800; fill: #0f172a; text-anchor: end; }
+  </style>
+
+  <!-- Header -->
+  <text x="200" y="60" class="title">RAMEN ICHIRAN &amp; GRILL</text>
+  <text x="200" y="78" class="sub">1088 Silicon Valley Blvd, Suite 400</text>
+  <text x="200" y="93" class="sub">Date: Nov 02, 2026 - 8:45 PM | Order #4082</text>
+  
+  <line x1="60" y1="110" x2="340" y2="110" class="divider" />
+  
+  <!-- Items -->
+  <text x="60" y="135" class="item-name">1x Tonkotsu Black Garlic Ramen</text>
+  <text x="340" y="135" class="item-price">$16.50</text>
+  
+  <text x="60" y="165" class="item-name">1x Spicy Miso Chashu Ramen</text>
+  <text x="340" y="165" class="item-price">$17.50</text>
+  
+  <text x="60" y="195" class="item-name">1x Handmade Pork Gyoza (6pc)</text>
+  <text x="340" y="195" class="item-price">$8.50</text>
+  
+  <text x="60" y="225" class="item-name">1x Japanese Karaage Chicken</text>
+  <text x="340" y="225" class="item-price">$9.50</text>
+  
+  <text x="60" y="255" class="item-name">3x Iced Jasmine Green Tea</text>
+  <text x="340" y="255" class="item-price">$6.00</text>
+  
+  <line x1="60" y1="280" x2="340" y2="280" class="divider" />
+  
+  <!-- Totals -->
+  <text x="60" y="305" class="item-name" fill="#475569">Subtotal</text>
+  <text x="340" y="305" class="item-price" fill="#475569">$58.00</text>
+  
+  <text x="60" y="330" class="item-name" fill="#475569">Sales Tax (9.5%)</text>
+  <text x="340" y="330" class="item-price" fill="#475569">$5.51</text>
+  
+  <text x="60" y="355" class="item-name" fill="#475569">Tip (18%)</text>
+  <text x="340" y="355" class="item-price" fill="#475569">$10.44</text>
+
+  <text x="60" y="380" class="item-name" fill="#475569">Service Fee</text>
+  <text x="340" y="380" class="item-price" fill="#475569">$2.00</text>
+  
+  <line x1="60" y1="400" x2="340" y2="400" stroke="#0f172a" stroke-width="1.5" />
+  
+  <text x="60" y="428" class="total-label">TOTAL</text>
+  <text x="340" y="428" class="total-val">$75.95</text>
+  
+  <!-- Footer Note -->
+  <line x1="60" y1="450" x2="340" y2="450" class="divider" />
+  <text x="200" y="475" class="sub" font-weight="bold">*** THANK YOU FOR DINING WITH US ***</text>
+  <text x="200" y="490" class="sub">SplitSmart AI • Meta Global AI Hackathon 2026</text>
+</svg>
